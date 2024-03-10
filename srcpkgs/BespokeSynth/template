@@ -1,0 +1,27 @@
+# Template file for 'BespokeSynth'
+pkgname=BespokeSynth
+version=1.2.1
+revision=1
+build_style=cmake
+configure_args="${wrksrc} -DCMAKE_BUILD_TYPE=Release"
+hostmakedepends="git pkg-config"
+makedepends="alsa-lib-devel freetype-devel gtk+3-devel jack-devel libcurl-devel
+ python3-devel webkit2gtk-devel"
+short_desc="Software modular synth"
+maintainer="Matthew Beaudoin <m.beaudoin@mailbox.org>"
+license="GPL-3.0-or-later"
+homepage="https://www.bespokesynth.com/"
+changelog="https://github.com/BespokeSynth/BespokeSynth/blob/main/CHANGELOG.md"
+
+do_fetch() {
+	# Fetch a Git repo to properly build submodules.
+	rm -rf ${wrksrc}
+	git clone https://github.com/BespokeSynth/BespokeSynth ${wrksrc}
+	cd ${wrksrc}
+	git checkout v${version}
+	git submodule update --init --recursive
+}
+
+do_extract() {
+	:
+}
